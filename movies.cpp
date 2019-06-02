@@ -16,7 +16,7 @@ BST::~BST() {
 }
 
 // recursive helper for destructor
-void BST::clear(Node *n) {
+void clear(Node *n) {
     if (n) {
 	    clear(n->left);
 	    clear(n->right);
@@ -39,7 +39,7 @@ bool BST::insert(string n, double r) {
 bool BST::insert(string m, double r,  Node *n) {
     if (m == n->name)
 	    return false;
-    if (m < n->info) {
+    if (m < n->name) {
 	    if (n->left)
 	        return insert(m,r, n->left);
 	    else {
@@ -82,7 +82,7 @@ void BST::printInOrder(Node *n) const {
         return;
     }
     printInOrder(n->left);
-    cout<<n->name<<", ",<n->rating<<endl;
+    cout<<n->name<<", "<<n->rating<<endl;
     printInOrder(n->right);
 
 }
@@ -114,29 +114,28 @@ int BST::count(Node *n) const {
     return 1+count(n->left)+count(n->right);
 }
 
-// IMPLEMENT THIS FIRST: returns the node for a given value or NULL if none exists
-// Parameters:
-// int value: the value to be found
-// Node* n: the node to start with (for a recursive call)
-// Whenever you call this method from somewhere else, pass it
-// the root node as "n"
-BST::vector<Node*> BST::getNodesFor(string prefix, Node* n) const{
-    vecotr<Node*> v;
+vector<Node*> BST:: getNodesFor(string prefix){
+    return getNodesFor(prefix, root);
+}
+vector<Node*> BST::getNodesFor(string prefix, Node* n) const{
+    vector<Node*> v;
     int i= prefix.length();
     if (!n){
-        return nullptr;
+        return v;
     }
     else if (n->name.substr(0,i) == prefix){
         v.push_back(n);
     }
-    else if (n->name >value){
+    else if (n->name.substr(0,i) >prefix){
         return getNodesFor(prefix,n->left);
     }
-    else {//if (n->info <value){
+    else {
         return getNodesFor(prefix,n->right);
     }
+    return v; // think about this
 }
-BST::Node* BST::MaxNode(vector<Node*> v){
+
+Node* BST::MaxNode(vector<Node*> v){
     Node* max=v[0];
     for (int i=0; i<v.size();i++){
         if(v[i]->rating > max->rating){
@@ -149,7 +148,7 @@ BST::Node* BST::MaxNode(vector<Node*> v){
 
 // returns true if value is in the tree; false if not
 bool BST::contains(string prefix) const {
-    if (getNodeFor(prefix,root)==nullptr){
+    if (getNodesFor(prefix,root).empty()){
         return false;
     }
     return true;
@@ -279,3 +278,6 @@ bool BST::remove(int value){
     }
 }
 */
+void play(BST& movies, string prefix){
+    vector<Node*> v= movies.getNodesFor(prefix);
+}
