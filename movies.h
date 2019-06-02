@@ -27,6 +27,8 @@ class BST {
     ~BST();                  // destructor
     friend void clear(Node* n);
     vector<Node*> getNodesFor(string prefix);
+    friend Node* MaxNode(vector<Node*> v);
+
     bool insert(string n, double r);     // insert movie; return false if duplicate
     void printPreOrder() const; // prints tree data pre-order to cout
     void printInOrder() const;
@@ -43,7 +45,6 @@ class BST {
     Node *root;
     vector<Node*> getNodesFor(string prefix, Node* n) const; // IMPLEMENT THIS FIRST: returns the node for a given value or NULL if none exists
     
-    Node* MaxNode(vector<Node*> v);
     bool contains(string prefix) const;
     void clear(Node *n); // for destructor
     bool insert(string m, double r, Node *n); // note overloading names for simplicity
@@ -54,4 +55,6 @@ class BST {
 };
 void clear(Node* n);
 void play(BST& movies,string prefix);
+Node* MaxNode(vector<Node*> v);
+
 #endif
