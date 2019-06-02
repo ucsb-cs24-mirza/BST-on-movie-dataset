@@ -115,13 +115,18 @@ vector<Node*> BST::getNodesFor(string prefix, Node* n) const{
 }
 
 Node* MaxNode(vector<Node*> v){
-    Node* max=v[0];
-    for (int i=0; i<v.size();i++){
-        if(v[i]->rating > max->rating){
-            max=v[i];
+    if(!v.empty()){
+        Node* max=v[0];
+        for (int i=0; i<v.size();i++){
+            if(v[i]->rating > max->rating){
+                max=v[i];
+            }
         }
+        return max;
     }
-    return max;
+    else{
+        return nullptr;
+    }
 }
 
 
@@ -262,6 +267,6 @@ void play(BST& movies, string prefix){
     Node* max = MaxNode(v);
     movies.printPreOrder();
     cout<<endl;
-    cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
-
+    if(max)
+        cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
 }
