@@ -30,7 +30,7 @@ class BST {
 
     bool insert(string n, double r);     // insert movie; return false if duplicate
     void printPreOrder() const; // prints tree data pre-order to cout
-    int count() const;               // count of values
+    int visitedNode(string movie) const;               // count of values
 
     int getPredecessor(int value) const;       // returns the predecessor value of the given value or 0 if there is none
     int getSuccessor(int value) const;         // returns the successor value of the given value or 0 if there is none
@@ -46,7 +46,7 @@ class BST {
     bool contains(string prefix) const;
     bool insert(string m, double r, Node *n); // note overloading names for simplicity
     void printPreOrder(Node *n) const;
-    int count(Node* n) const;
+    int visitedNode(string m, Node* n) const;
 };
 void play(BST& movies,string prefix);
 Node* MaxNode(vector<Node*> v);

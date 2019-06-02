@@ -67,22 +67,30 @@ void BST::printPreOrder() const {
 // recursive helper for printPreOrder()
 void BST::printPreOrder(Node *n) const {
     if (n) {
-	    cout << n->name << ", "<<n->rating<<endl;
+	    cout << n->name << ", "<<n->rating<<", "<<visitedNode(n->name)<<endl;
 	    printPreOrder(n->left);
 	    printPreOrder(n->right);
     }
 }
 // return count of values
-int BST::count() const {
-    return count(root);
+int BST::visitedNode(string movie) const {
+    return visitedNode(movie, root);
 }
 
 // recursive helper for count
-int BST::count(Node *n) const {
+int BST::visitedNode(string m,Node* n) const {
     if (!n){
+        return -1;
+    }
+    else if(n->name==m){
         return 0;
     }
-    return 1+count(n->left)+count(n->right);
+    else if(n->name > m){
+        return 1+visitedNode(m,n->left);
+    }
+    else{
+        return 1+visitedNode(m,n->right);
+    }
 }
 
 vector<Node*> BST:: getNodesFor(string prefix){
@@ -253,6 +261,7 @@ void play(BST& movies, string prefix){
     vector<Node*> v= movies.getNodesFor(prefix);
     Node* max = MaxNode(v);
     movies.printPreOrder();
+    cout<<endl;
     cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
 
 }
