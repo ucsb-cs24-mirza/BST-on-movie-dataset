@@ -102,17 +102,24 @@ vector<Node*> BST::getNodesFor(string prefix, Node* n) const{
     if (!n){
         return v;
     }
-    else if (n->name.substr(0,i) == prefix){
-        v.push_back(n);
-    }
+ 
     else if (n->name.substr(0,i) >prefix){
         return getNodesFor(prefix,n->left);
     }
-    else {
+    else if (n->name.substr(0,i)<prefix){
         return getNodesFor(prefix,n->right);
     }
-    return v; // think about this
+
+    else {// (n->name.substr(0,i) == prefix){
+        v.push_back(n);
+        vector<Node*> v1=getNodesFor(prefix,n->left);
+        vector<Node*> v2=getNodesFor(prefix,n->right);
+        v.insert(v.end(),v1.begin(),v1.end());
+        v.insert(v.end(),v2.begin(),v2.end());
+        return v;
+    }
 }
+
 
 Node* MaxNode(vector<Node*> v){
     if(!v.empty()){
