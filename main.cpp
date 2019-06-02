@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 		exit(1);
 	}
 	
-	ifstream movieFile (argv[1]);
+	ifstream movieFile (argv[2]);
     string prefix=argv[3];// attention!!
 	string line, movieName;
 	double movieRating;
