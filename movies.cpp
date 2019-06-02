@@ -16,7 +16,7 @@ BST::~BST() {
 }
 
 // recursive helper for destructor
-void clear(Node *n) {
+void BST::clear(Node *n) {
     if (n) {
 	    clear(n->left);
 	    clear(n->right);
@@ -72,35 +72,6 @@ void BST::printPreOrder(Node *n) const {
 	    printPreOrder(n->right);
     }
 }
-
-// print tree data in-order, with helper
-void BST::printInOrder() const {
-    printInOrder(root);
-}
-void BST::printInOrder(Node *n) const {
-    if (!n){
-        return;
-    }
-    printInOrder(n->left);
-    cout<<n->name<<", "<<n->rating<<endl;
-    printInOrder(n->right);
-
-}
-
-// prints tree data post-order, with helper
-void BST::printPostOrder() const {
-    printPostOrder(root);
-}
-
-void BST::printPostOrder(Node *n) const {
-    if(!n){
-        return;
-    }
-    printPostOrder(n->left);
-    printPostOrder(n->right);
-    cout<<n->name<<", "<<n->rating<<endl;
-}
-
 // return count of values
 int BST::count() const {
     return count(root);
@@ -281,7 +252,7 @@ bool BST::remove(int value){
 void play(BST& movies, string prefix){
     vector<Node*> v= movies.getNodesFor(prefix);
     Node* max = MaxNode(v);
-    movies.printInOrder();
+    movies.printPreOrder();
     cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
 
 }

@@ -25,14 +25,11 @@ class BST {
  public:
     BST();                   // constructor
     ~BST();                  // destructor
-    friend void clear(Node* n);
     vector<Node*> getNodesFor(string prefix);
     friend Node* MaxNode(vector<Node*> v);
 
     bool insert(string n, double r);     // insert movie; return false if duplicate
     void printPreOrder() const; // prints tree data pre-order to cout
-    void printInOrder() const;
-    void printPostOrder() const;
     int count() const;               // count of values
 
     int getPredecessor(int value) const;       // returns the predecessor value of the given value or 0 if there is none
@@ -43,17 +40,14 @@ class BST {
 
         // just one instance variable (pointer to root node):
     Node *root;
+    void clear(Node *n);
     vector<Node*> getNodesFor(string prefix, Node* n) const; // IMPLEMENT THIS FIRST: returns the node for a given value or NULL if none exists
     
     bool contains(string prefix) const;
-    void clear(Node *n); // for destructor
     bool insert(string m, double r, Node *n); // note overloading names for simplicity
     void printPreOrder(Node *n) const;
-    void printInOrder(Node *n) const;
-    void printPostOrder(Node *n) const;
     int count(Node* n) const;
 };
-void clear(Node* n);
 void play(BST& movies,string prefix);
 Node* MaxNode(vector<Node*> v);
 

@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
+#include "movies.h"
 
 using namespace std;
 
@@ -27,9 +28,9 @@ int main(int argc, char** argv){
 	}
 	
 	ifstream movieFile (argv[1]);
+    string prefix=argv[3];// attention!!
 	string line, movieName;
 	double movieRating;
-
 	if (movieFile.fail()){
 		cerr << "Could not open file " << argv[1];
 		exit(1);
@@ -43,8 +44,10 @@ int main(int argc, char** argv){
 		// Use std::string movieName and double movieRating
 		// to construct your Movie objects
 		cout << movieName << " has rating " << movieRating << endl;
+        movie.insert(movieName, movieRating);
 	}
 	movieFile.close();
+    play(movie,prefix);
 
 	return 0;
 }
