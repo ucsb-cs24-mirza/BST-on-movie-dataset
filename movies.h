@@ -26,7 +26,7 @@ class BST {
     BST();                   // constructor
     ~BST();                  // destructor
     vector<Node*> getNodesFor(string prefix);
-    friend Node* MaxNode(vector<Node*> v);
+    Node* MaxNode(string prefix);
 
     bool insert(string n, double r);     // insert movie; return false if duplicate
     void printPreOrder() const; // prints tree data pre-order to cout
@@ -49,6 +49,5 @@ class BST {
     int visitedNode(string m, Node* n) const;
 };
 void play(BST& movies,string prefix);
-Node* MaxNode(vector<Node*> v);
 
 #endif

@@ -121,7 +121,8 @@ vector<Node*> BST::getNodesFor(string prefix, Node* n) const{
 }
 
 
-Node* MaxNode(vector<Node*> v){
+Node* BST::MaxNode(string prefix){
+    vector<Node*> v=getNodesFor(prefix);
     if(!v.empty()){
         Node* max=v[0];
         for (int i=0; i<v.size();i++){
@@ -270,8 +271,7 @@ bool BST::remove(int value){
 }
 */
 void play(BST& movies, string prefix){
-    vector<Node*> v= movies.getNodesFor(prefix);
-    Node* max = MaxNode(v);
+    Node* max = movies.MaxNode(prefix);
     movies.printPreOrder();
     cout<<endl;
     if(max)

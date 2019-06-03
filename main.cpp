@@ -1,3 +1,7 @@
+// main.cpp
+// Danming Wang
+// 06/02/2019
+
 #include <iostream>
 #include <fstream>
 #include <string>
