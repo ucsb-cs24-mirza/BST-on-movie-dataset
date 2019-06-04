@@ -24,57 +24,54 @@ int main(int argc, char** argv){
 	bool flag = false;
 	if(strcmp(argv[1], "true") == 0){
 		flag = true;
+        ifstream movieFile (argv[2]);
+	    string line, movieName;
+	    double movieRating;
+   	    if (movieFile.fail()){
+		    cerr << "Could not open file " << argv[2];
+		    exit(1);
+	    }
+
+	    BST movie;
+	    // Read each file and store the name and rating
+	    while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
+            movie.insert(movieName, movieRating);
+        }
+	    movieFile.close();
+        string prefix=argv[3];
+        play(movie,prefix);
 	} else if(strcmp(argv[1], "false") == 0) {
 		flag = false;
+        ifstream movieFile (argv[2]);
+	    string line, movieName;
+	    double movieRating;
+        int W = stoi(argv[3]);
+        if (movieFile.fail()){
+		    cerr << "Could not open file " << argv[2];
+		    exit(1);
+	    }
+
         ofstream myfile;
         string filename = argv[2];
         int namel=filename.length();
         filename = filename.substr(0,namel-4)+"_data.csv";
         myfile.open(filename);
         myfile<<"N,N_visited,\n";
+        BST movie;
+	    // Read each file and store the name and rating
+	    while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
+            myfile<<movie.count();
+            movie.insert(movieName,movieRating);
+            myfile<<","<<movie.visitedNode(movieName)<<endl;
+        }
+        movieFile.close();
         myfile.close();
+        play2(movie,W);
 	} else {
 		cerr << "Argument 1 must be a boolean (true/false)" << endl;
 		exit(1);
 	}
 	
-	ifstream movieFile (argv[2]);
-	string line, movieName;
-	double movieRating;
-    string filename = argv[2];
-    int namel=filename.length();
-    filename = filename.substr(0,namel-4)+"_data.csv";
-
-	if (movieFile.fail()){
-		cerr << "Could not open file " << argv[2];
-		exit(1);
-	}
-
-	BST movie;
-	// Read each file and store the name and rating
-	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
-        if (flag==true){
-            movie.insert(movieName, movieRating);
-        }else{
-            ofstream myfile;
-            myfile.open(filename);
-            myfile<<movie.count();
-            movie.insert(movieName,movieRating);
-            myfile<<","<<movie.visitedNode(movieName)<<endl;
-            myfile.close();
-        }
-	}
-	movieFile.close();
-    if (flag==true){
-        string prefix=argv[3];
-        play(movie,prefix);
-    }
-    else{
-        int W = stoi(argv[3]);
-        play2(movie,W);
-    }
-
-
 	return 0;
 }
 
