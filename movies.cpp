@@ -277,3 +277,42 @@ void play(BST& movies, string prefix){
     if(max)
         cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
 }
+void play2(BST& movies, int W){
+    double* avg= new double[W];
+    for(int i=0;i<W;i++){
+        double time = movies.time();
+        int N = movies.count();
+        avg[i]=time/N;
+    }
+    cout<<"Min Time is "<<min(avg,W)<<" seconds\n";
+    cout<<"Max Time is " <<max(avg,W)<<" seconds\n";
+    cout<<"Median Time is "<<median(avg,W)<<"seconds\n";
+}
+
+int BST::count() const {
+    return count(root);
+}
+
+// recursive helper for count
+int BST::count(Node *n) const {
+    if (!n){
+        return 0;
+    }
+    return 1+count(n->left)+count(n->right);
+}
+double BST::time() {
+    return time(root)+time(root->left)+time(root->right);
+}
+double BST::time(Node* n) {
+    if(n){
+        clock_t t;
+        t=clock();
+        getNodesFor(n->name);
+        t=clock()-t;
+        return t;
+    }
+    else{
+        return 0.0;
+    }
+
+}

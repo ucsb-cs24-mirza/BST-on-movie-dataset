@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
+#include "utility.h"
 using namespace std;
 
 class Node {
@@ -36,6 +38,9 @@ class BST {
     int getSuccessor(int value) const;         // returns the successor value of the given value or 0 if there is none
     bool remove(int value);                    // deletes the Node containing the given value from the tree
     friend void play(BST& movies, string prefix);
+    friend void play2(BST& movies, int W);
+    int count() const;
+    double time() ;
  private:
 
         // just one instance variable (pointer to root node):
@@ -47,7 +52,9 @@ class BST {
     bool insert(string m, double r, Node *n); // note overloading names for simplicity
     void printPreOrder(Node *n) const;
     int visitedNode(string m, Node* n) const;
+    int count(Node* n) const;
+    double time(Node* n) ;
 };
 void play(BST& movies,string prefix);
-
+void play2(BST& movies, int W);
 #endif

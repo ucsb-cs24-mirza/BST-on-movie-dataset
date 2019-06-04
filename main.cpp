@@ -32,25 +32,28 @@ int main(int argc, char** argv){
 	}
 	
 	ifstream movieFile (argv[2]);
-    string prefix=argv[3];// attention!!
 	string line, movieName;
 	double movieRating;
 	if (movieFile.fail()){
-		cerr << "Could not open file " << argv[1];
+		cerr << "Could not open file " << argv[2];
 		exit(1);
 	}
 
-	// Create an objects of the BST class you defined 
-	// to contain the name and rating in the input file
 	BST movie;
 	// Read each file and store the name and rating
 	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
-		// Use std::string movieName and double movieRating
-		// to construct your Movie objects
         movie.insert(movieName, movieRating);
 	}
 	movieFile.close();
-    play(movie,prefix);
+    if (flag==true){
+        string prefix=argv[3];
+        play(movie,prefix);
+    }
+    else{
+        int W = stoi(argv[3]);
+        play2(movie,W);
+    }
+
 
 	return 0;
 }
