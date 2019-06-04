@@ -26,6 +26,13 @@ int main(int argc, char** argv){
 		flag = true;
 	} else if(strcmp(argv[1], "false") == 0) {
 		flag = false;
+        ofstream myfile;
+        string filename = argv[2];
+        int namel=filename.length();
+        filename = filename.substr(0,namel-4)+"_data.csv";
+        myfile.open(filename);
+        myfile<<"N,N_visited,\n";
+        myfile.close();
 	} else {
 		cerr << "Argument 1 must be a boolean (true/false)" << endl;
 		exit(1);
@@ -34,6 +41,10 @@ int main(int argc, char** argv){
 	ifstream movieFile (argv[2]);
 	string line, movieName;
 	double movieRating;
+    string filename = argv[2];
+    int namel=filename.length();
+    filename = filename.substr(0,namel-4)+"_data.csv";
+
 	if (movieFile.fail()){
 		cerr << "Could not open file " << argv[2];
 		exit(1);
@@ -42,7 +53,16 @@ int main(int argc, char** argv){
 	BST movie;
 	// Read each file and store the name and rating
 	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
-        movie.insert(movieName, movieRating);
+        if (flag==true){
+            movie.insert(movieName, movieRating);
+        }else{
+            ofstream myfile;
+            myfile.open(filename);
+            myfile<<movie.count();
+            movie.insert(movieName,movieRating);
+            myfile<<","<<movie.visitedNode(movieName)<<endl;
+            myfile.close();
+        }
 	}
 	movieFile.close();
     if (flag==true){

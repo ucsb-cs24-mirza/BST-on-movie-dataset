@@ -286,7 +286,7 @@ void play2(BST& movies, int W){
     }
     cout<<"Min Time is "<<min(avg,W)<<" seconds\n";
     cout<<"Max Time is " <<max(avg,W)<<" seconds\n";
-    cout<<"Median Time is "<<median(avg,W)<<"seconds\n";
+    cout<<"Median Time is "<<median(avg,W)<<" seconds\n";
 }
 
 int BST::count() const {
