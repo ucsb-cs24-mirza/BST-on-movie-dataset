@@ -2,8 +2,8 @@
 // Danming Wang
 // 05/04/2019
 
-#ifndef TEST_H
-#define TEST_H
+#ifndef TESTS_H
+#define TESTS_H
 #include <iostream>
 
 using namespace std;
