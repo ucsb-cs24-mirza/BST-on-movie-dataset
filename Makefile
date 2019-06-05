@@ -6,7 +6,7 @@ CXX_FLAG = --std=c++11 -g
 runMovies: movies.o main.o utility.o
 	g++ $(CXX_FLAG) -o runMovies movies.o main.o utility.o
 
-tests: tests.o
+tests: tests.o movies.o utility.o
 	g++ $(CXX_FLAG) -o tests tests.o movies.o utility.o 
 
 movies.o: movies.h movies.cpp
