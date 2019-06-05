@@ -10,8 +10,8 @@ using namespace std;
 
 void runAll();
 void test_constructor();
-void test_printInOrder();
-void test_printPostOrder();
+void test_destructor();
+void test_printPreOrder();
 void test_visitedNode();
 void test_count();
 void test_MaxNode();
