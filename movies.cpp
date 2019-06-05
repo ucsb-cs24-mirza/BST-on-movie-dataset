@@ -26,9 +26,10 @@ void BST::clear(Node *n) {
 
 // insert value in tree; return false if duplicate
 bool BST::insert(string n, double r) {
+    int c = count();
     // handle special case of empty tree first
     if (!root) {
-	    root = new Node(n,r);
+	    root = new Node(n,r,c);
 	    return true;
     }
     // otherwise use recursive helper
@@ -37,13 +38,14 @@ bool BST::insert(string n, double r) {
 
 // recursive helper for insert (assumes n is never 0)
 bool BST::insert(string m, double r,  Node *n) {
+    int c=count();
     if (m == n->name)
 	    return false;
     if (m < n->name) {
 	    if (n->left)
 	        return insert(m,r, n->left);
 	    else {
-	        n->left = new Node(m,r);
+	        n->left = new Node(m,r,c);
 	        n->left->parent = n;
 	        return true;
 	    }
@@ -52,7 +54,7 @@ bool BST::insert(string m, double r,  Node *n) {
 	    if (n->right)
 	        return insert(m,r, n->right);
 	    else {
-	        n->right = new Node(m,r);
+	        n->right = new Node(m,r,c);
 	        n->right->parent = n;
 	        return true;
 	    }
@@ -137,139 +139,6 @@ Node* BST::MaxNode(string prefix){
     }
 }
 
-
-// returns true if value is in the tree; false if not
-bool BST::contains(string prefix) const {
-    if (getNodesFor(prefix,root).empty()){
-        return false;
-    }
-    return true;
-}
-/*
-// returns the Node containing the predecessor of the given value
-BST::Node* BST::getPredecessorNode(int value) const{
-    Node* a= getNodeFor(value,root);
-    if(a==nullptr){
-        return nullptr;
-    }
-    else if(a->left){
-        Node* m=a->left;
-        // predecessor of value is in its subtree
-        while(m->right){
-            m=m->right;
-        }
-        return m;
-    }
-    else{
-        Node* t=a->parent;
-        while(t&&t->info>a->info){
-            t=t->parent;
-        }
-        // if there is no predecessor, then t=nullptr and exit while loop
-        return t;
-        
-    }
-}
-
-// returns the predecessor value of the given value or 0 if there is none
-int BST::getPredecessor(int value) const{
-    if (getPredecessorNode(value)==nullptr){
-        return 0;
-    }
-    return getPredecessorNode(value)->info;
-}
-
-// returns the Node containing the successor of the given value
-BST::Node* BST::getSuccessorNode(int value) const{
-    Node* a= getNodeFor(value,root);
-    if(a==nullptr){
-        return nullptr;
-    }
-    else if(a->right){
-        Node* m=a->right;
-        while(m->left){
-            m=m->left;
-        }
-        return m;
-    }
-    else{
-        Node* t=a->parent;
-        while(t&&t->info<a->info){
-            t=t->parent;
-        }
-        return t;
-        
-    }
-}
-
-// returns the successor value of the given value or 0 if there is none
-int BST::getSuccessor(int value) const{
-    if (getSuccessorNode(value)==nullptr){
-        return 0;
-    }
-    return getSuccessorNode(value)->info;
-}
-
-// deletes the Node containing the given value from the tree
-// returns true if the node exist and was deleted or false if the node does not exist
-bool BST::remove(int value){
-    Node* a= getNodeFor(value,root);
-    Node* p = a->parent;
-    if (a==nullptr){
-        return false;
-    }
-    else if (!a->left&& !a->right){
-        if(a==root){
-            root = nullptr;
-        }
-        // Node is a leaf node
-        else if(a->info>p->info){
-            p->right=nullptr;
-            delete a;
-        }
-        else{
-            p->left=nullptr;
-            delete a;
-        }
-        return true;
-    }
-    else if (!a->left){
-        // Node has only one child
-        if(p->info>a->info){
-            p->left=a->right;
-            a->right->parent=p;
-            delete a;
-        }
-        else{
-            p->right=a->right;
-            a->right->parent=p;
-            delete a;
-        }
-        return true;
-    }
-    else if (!a->right){
-        // Node has only one child
-        if(p->info>a->info){
-            p->left=a->left;
-            a->left->parent=p;
-            delete a;
-        }
-        else{
-            p->right=a->left;
-            a->left->parent=p;
-            delete a;
-        }
-        return true;
-     }
-     else {
-         int sn = getSuccessor(value);
-         remove(sn);
-         a->info=sn;
-         return true;
-      
-    }
-}
-*/
 void play(BST& movies, string prefix){
     Node* max = movies.MaxNode(prefix);
     movies.printPreOrder();
@@ -278,15 +147,19 @@ void play(BST& movies, string prefix){
         cout<<"Best movie is "<<max->name<<" with rating "<<max->rating<<endl;
 }
 void play2(BST& movies, int W){
-    double* avg= new double[W];
-    for(int i=0;i<W;i++){
-        double time = movies.time();
-        int N = movies.count();
-        avg[i]=time/N;
+    int N = movies.count();
+    double NW = double(N) * double(W);
+    double *avg = new double[W];
+    for (int i=0;i<W;i++){
+        clock_t t = clock();
+        movies.searchAll();
+        t=clock()-t;
+        avg[i]=(((double)t)/(CLOCKS_PER_SEC))*1000000/double(N);
     }
-    cout<<"Min Time is "<<min(avg,W)<<" seconds\n";
-    cout<<"Max Time is " <<max(avg,W)<<" seconds\n";
-    cout<<"Median Time is "<<median(avg,W)<<" seconds\n";
+    cout<<"Min AVERAGE Time is "<<min(avg,W)<<" micro seconds\n";
+    cout<<"Max AVERAGE Time is " <<max(avg,W)<<" micro seconds\n";
+    cout<<"Median AVERAGE Time is "<<median(avg,W)<<" micro seconds\n";
+    delete avg;
 }
 
 int BST::count() const {
@@ -300,19 +173,33 @@ int BST::count(Node *n) const {
     }
     return 1+count(n->left)+count(n->right);
 }
-double BST::time() {
-    return time(root)+time(root->left)+time(root->right);
-}
-double BST::time(Node* n) {
-    if(n){
-        clock_t t;
-        t=clock();
-        getNodesFor(n->name);
-        t=clock()-t;
-        return t;
-    }
-    else{
-        return 0.0;
-    }
 
+Node* BST::search(int c, Node* n) const{
+    if (!n){
+        return nullptr;
+    }
+    else if (n->count == c){
+        return n;
+    }
+    else if (n->count >c){
+        return search(c,n->left);
+    }
+    else {
+        return search(c,n->right);
+    }
+}
+
+void BST::searchAll() {
+    int num = count();
+    searchAll(num, root); 
+}
+
+void BST::searchAll(int number, Node* n) {
+    if(!n){
+        return;
+    }else{
+        for(int i=0;i<number;i++){
+            search(i,root);
+        }
+    }
 }

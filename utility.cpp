@@ -1,4 +1,5 @@
 #include "utility.h"
+#include <bits/stdc++.h> 
 using namespace std;
 
 double min(double arr[], int size){
@@ -22,6 +23,7 @@ double max(double arr[], int size){
 }
 
 double median(double arr[], int size){
+    sort(arr,arr+size);
     int mid = size/2;
     if (size%2==0){
         return (arr[mid]+arr[mid+1])/2;
@@ -29,5 +31,4 @@ double median(double arr[], int size){
         return arr[mid];
     }
 }
-
 

@@ -28,7 +28,7 @@ int main(int argc, char** argv){
 	    string line, movieName;
 	    double movieRating;
    	    if (movieFile.fail()){
-		    cerr << "Could not open file " << argv[2];
+		    cerr << "Could not open file " << argv[2]<<endl;
 		    exit(1);
 	    }
 

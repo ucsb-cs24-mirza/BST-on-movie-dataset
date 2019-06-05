@@ -1,6 +1,6 @@
 // Movies.h
 // Danming Wang
-// 05/21/2019
+// 06/04/2019
 
 #ifndef MOVIES_H
 #define MOVIES_H
@@ -16,9 +16,10 @@ class Node {
     public:
 	    string name;
         double rating;
+        int count;
 	    Node *left, *right, * parent;
 	// useful constructor:
-        Node(string n="default", double r=0.0) : name(n), rating(r), left(0), right(0), parent(0) { }
+        Node(string n="default", double r=0.0, int c=0) : name(n), rating(r), count(c),left(0), right(0), parent(0) { }
 };
 
 
@@ -35,13 +36,11 @@ class BST {
     void printPreOrder() const; // prints tree data pre-order to cout
     int visitedNode(string movie) const;               // count of values
 
-    int getPredecessor(int value) const;       // returns the predecessor value of the given value or 0 if there is none
-    int getSuccessor(int value) const;         // returns the successor value of the given value or 0 if there is none
-    bool remove(int value);                    // deletes the Node containing the given value from the tree
     friend void play(BST& movies, string prefix);
     friend void play2(BST& movies, int W);
     int count() const;
-    double time() ;
+    Node* search(int c, Node* n) const;
+    void searchAll() ;
  private:
 
         // just one instance variable (pointer to root node):
@@ -49,12 +48,11 @@ class BST {
     void clear(Node *n);
     vector<Node*> getNodesFor(string prefix, Node* n) const; // IMPLEMENT THIS FIRST: returns the node for a given value or NULL if none exists
     
-    bool contains(string prefix) const;
     bool insert(string m, double r, Node *n); // note overloading names for simplicity
     void printPreOrder(Node *n) const;
     int visitedNode(string m, Node* n) const;
     int count(Node* n) const;
-    double time(Node* n) ;
+    void searchAll(int number, Node* n) ;
 };
 void play(BST& movies,string prefix);
 void play2(BST& movies, int W);
