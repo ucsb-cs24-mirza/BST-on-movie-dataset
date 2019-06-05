@@ -27,6 +27,7 @@ class BST {
  public:
     BST();                   // constructor
     ~BST();                  // destructor
+    Node* getRoot(){ return root;}
     vector<Node*> getNodesFor(string prefix);
     Node* MaxNode(string prefix);
 
