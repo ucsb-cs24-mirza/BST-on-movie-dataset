@@ -2,6 +2,7 @@
 # Danming Wang 06/01/2019
 
 CXX_FLAG = --std=c++11 -g
+all: runMovies tests
 
 runMovies: movies.o main.o utility.o
 	g++ $(CXX_FLAG) -o runMovies movies.o main.o utility.o
