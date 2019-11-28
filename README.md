@@ -1,2 +1,2 @@
-# pa02_danming33
-Repository for pa02
+# BST on movie dataset
+Repository for BST on movie dataset
